@@ -24,6 +24,32 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
             return JsonConvert.DeserializeObject<List<Article>>(result);
         }
 
+        public static async Task<Article> GetArticleById(int id)
+        {
+            if (id !< 0)
+                return null;
+            HttpClient client = new HttpClient();
+            string url = baseUrl + "articles/" + id;
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (!(response.StatusCode == System.Net.HttpStatusCode.OK))
+                return null;
+            var result = response.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<Article>(result);
+        }
+
+        public static async Task<List<Article>> GetArticlesByCategoryId(int categoryId)
+        {
+            if (categoryId !> 0)
+                return null;
+            HttpClient client = new HttpClient();
+            string url = baseUrl + "articles/bycategory/" + categoryId;
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (!(response.StatusCode == System.Net.HttpStatusCode.OK))
+                return null;
+            var result = response.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<List<Article>>(result);
+        }
+
         public static async Task<List<Category>> GetCategories()
         {
             HttpClient client = new HttpClient();
@@ -35,6 +61,19 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
             return JsonConvert.DeserializeObject<List<Category>>(result);
         }
 
+        public static async Task<Category> GetCategoryById(int id)
+        {
+            if (id !< 0)
+                return null;
+            HttpClient client = new HttpClient();
+            string url = baseUrl + "categories/" + id;
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (!(response.StatusCode == System.Net.HttpStatusCode.OK))
+                return null;
+            var result = response.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<Category>(result);
+        }
+
         public static async Task<List<Recipe>> GetRecipes()
         {
             HttpClient client = new HttpClient();
@@ -44,6 +83,19 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
                 return null;
             var result = response.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<List<Recipe>>(result);
+        }
+
+        public static async Task<Recipe> GetRecipeByArticleId(int articleId)
+        {
+            if (articleId! > 0)
+                return null;
+            HttpClient client = new HttpClient();
+            string url = baseUrl + "recipes/" + articleId;
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (!(response.StatusCode == System.Net.HttpStatusCode.OK))
+                return null;
+            var result = response.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<Recipe>(result);
         }
 
         public static async Task<List<Operation>> GetOperations()
