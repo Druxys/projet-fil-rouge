@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProjetFilBleu_AppBureauxDEtudes.Entities
 {
-    public class Recipe
+    public class Recipe : BaseEntity
     {
         public Recipe()
         {

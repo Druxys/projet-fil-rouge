@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProjetFilBleu_AppBureauxDEtudes.Entities
 {
-    public class Operation
+    public class Operation : BaseEntity
     {
         public Operation()
         {
