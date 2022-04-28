@@ -8,6 +8,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
     public class BaseEntity
     {
         public int Id { get; set; }
+        public string PluralName { get; set; }
 
         public int id
         {

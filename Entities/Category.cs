@@ -5,8 +5,13 @@ using System.Threading.Tasks;
 
 namespace ProjetFilBleu_AppBureauxDEtudes.Entities
 {
-    public class Category
+    public class Category : BaseEntity
     {
+        public Category()
+        {
+            PluralName = "Categories";
+        }
+
         public string Code { get; set; }
         public string Label { get; set; }
 

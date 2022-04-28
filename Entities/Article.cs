@@ -7,6 +7,11 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
 {
     public class Article : BaseEntity
     {
+        public Article()
+        {
+            PluralName = "Articles";
+        }
+
         public string Code { get; set; }
         public string Label { get; set; }
         public int CategoryId { get; set; }

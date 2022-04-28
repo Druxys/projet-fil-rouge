@@ -7,6 +7,11 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
 {
     public class Recipe
     {
+        public Recipe()
+        {
+            PluralName = "Recipes";
+        }
+
         public int ArticleId { get; set; }
         public int OperationId { get; set; }
         // les composants sont des articles

@@ -7,6 +7,11 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
 {
     public class Operation
     {
+        public Operation()
+        {
+            PluralName = "Operations";
+        }
+
         public string Code { get; set; }
         public string Label { get; set; }
         public string Delay { get; set; }
