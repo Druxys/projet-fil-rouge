@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using ProjetFilBleu_AppBureauxDEtudes.DTOs;
 using ProjetFilBleu_AppBureauxDEtudes.Entities;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,18 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
                 return null;
             var result = response.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<List<Article>>(result);
+        }
+
+        public static async Task<string> PostArticle(ArticleToCreate article)
+        {
+            if (!article.VerifyArticleToCreate())
+                return "L'article que vous souhaitez créer n'est pas valide. Vérifiez bien que toutes les caractéristiques obligatoires sont bien renseignées";
+            HttpClient client = new HttpClient();
+            string url = baseUrl + "articles";
+            HttpResponseMessage response = await client.PostAsync(url, new StringContent(JsonConvert.SerializeObject(article)));
+            if (!(response.StatusCode == System.Net.HttpStatusCode.Created))
+                return null;
+            return "L'article a été créé avec succès.";
         }
 
         public static async Task<List<Category>> GetCategories()
