@@ -17,43 +17,15 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
         {
             try
             {
+                E exampleEntity = (E)Activator.CreateInstance(typeof(E), null);
                 List<E> entities = new List<E>();
 
-                // try to generalize the get route
-                //MethodInfo getMethod = typeof(JadServices).GetMethod("Get" + typeof(E).Name + "s");
-                //if (getMethod == null)
-                //    getMethod = typeof(JadServices).GetMethod("Get" + typeof(E).Name.Replace("y", "ies")); // for category (and maybe future properties which ends with ies when in plural
+                MethodInfo getMethod = typeof(JadServices).GetMethod("Get" + typeof(E).GetProperty("PluralName").GetValue(exampleEntity));
+                if (getMethod == null)
+                    return new StatusCodeResult(400);
 
-                //if (getMethod == null)
-                //    return new StatusCodeResult(400);
-
-                //Task<List<E>> getMethodResult = (Task<List<E>>)getMethod.Invoke(null, null);
-                //entities = await getMethodResult;
-
-                if (typeof(E).IsAssignableFrom(typeof(Article)))
-                {
-                    entities = await JadServices.GetArticles() as List<E>;
-                    if (entities == null)
-                        return new StatusCodeResult(500);
-                }
-                else if (typeof(E).IsAssignableFrom(typeof(Category)))
-                {
-                    entities = await JadServices.GetCategories() as List<E>;
-                    if (entities == null)
-                        return new StatusCodeResult(500);
-                }
-                else if (typeof(E).IsAssignableFrom(typeof(Operation)))
-                {
-                    entities = await JadServices.GetOperations() as List<E>;
-                    if (entities == null)
-                        return new StatusCodeResult(500);
-                }
-                else if (typeof(E).IsAssignableFrom(typeof(Recipe)))
-                {
-                    entities = await JadServices.GetRecipes() as List<E>;
-                    if (entities == null)
-                        return new StatusCodeResult(500);
-                }
+                Task<List<E>> getMethodResult = (Task<List<E>>)getMethod.Invoke(null, null);
+                entities = await getMethodResult;
 
                 return new JsonResult(JsonConvert.SerializeObject(entities));
             }
