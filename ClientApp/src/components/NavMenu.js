@@ -4,46 +4,32 @@ import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
 export class NavMenu extends Component {
-  static displayName = NavMenu.name;
+    static displayName = NavMenu.name;
 
-  constructor (props) {
-    super(props);
+    constructor(props) {
+        super(props);
+    }
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
-  }
+ 
 
-  toggleNavbar () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
-
-  render () {
-    return (
-      <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-          <Container>
-            <NavbarBrand tag={Link} to="/">ProjetFilBleu_AppBureauxDEtudes</NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-                </NavItem>
-              </ul>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    );
-  }
+    render() {
+        return (
+            <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark test" >
+                <ul className="nav nav-pills flex-column mb-auto">
+                    <li>
+                        <NavLink tag={Link} className="text-white" to="/">Recette</NavLink>
+                    </li>
+                    {/*<li>*/}
+                    {/*    <NavLink tag={Link} className="text-white" to="/counter"></NavLink>*/}
+                    {/*</li>*/}
+                    <li>
+                        <NavLink tag={Link} className="text-white" to="/fetch-data">Fetch data</NavLink>
+                    </li>
+                    <li>
+                        <NavLink tag={Link} className="text-white" to="/articles">Articles</NavLink>
+                    </li>
+                </ul>
+            </div>
+        )
+    }
 }
