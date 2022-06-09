@@ -57,10 +57,12 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
                 return "L'article que vous souhaitez créer n'est pas valide. Vérifiez bien que toutes les caractéristiques obligatoires sont bien renseignées";
             HttpClient client = new HttpClient();
             string url = baseUrl + "articles";
-            HttpResponseMessage response = await client.PostAsync(url, new StringContent(JsonConvert.SerializeObject(article)));
+            StringContent requestContent = new StringContent(JsonConvert.SerializeObject(new ArticleToCreate[] { article }));
+            requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await client.PostAsync(url, requestContent);
             if (!(response.StatusCode == System.Net.HttpStatusCode.Created))
                 return null;
-            return "L'article a été créé avec succès.";
+            return "Success";
         }
 
         public static async Task<List<Category>> GetCategories()

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ProjetFilBleu_AppBureauxDEtudes.Controllers;
+using ProjetFilBleu_AppBureauxDEtudes.DTOs;
 using ProjetFilBleu_AppBureauxDEtudes.Entities;
 using ProjetFilBleu_AppBureauxDEtudes.Services;
 using System;
@@ -25,6 +27,14 @@ namespace ProjetFilBleu_AppBureauxDEtudes
             List<Category> categories = await JadServices.GetCategories();
             List<Operation> operations = await JadServices.GetOperations();
             List<Recipe> recipes = await JadServices.GetRecipes();
+            ArticleToCreate articleToCreate = new ArticleToCreate
+            {
+                codeArticle = "D205541551",
+                codeCategorie = categories.First().Label,
+                codeOperation = operations.First().Code,
+                articles = new ArticleToCreateChildArticle[] { new ArticleToCreateChildArticle { codeArticle = "P361603178", quantite = 3 }, new ArticleToCreateChildArticle { codeArticle = "P736540925", quantite = 8 } }
+            };
+            await JadServices.PostArticle(articleToCreate);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
