@@ -23,18 +23,19 @@ namespace ProjetFilBleu_AppBureauxDEtudes
 
         public static async void CallJadServices()
         {
-            List<Article> articles = await JadServices.GetArticles();
-            List<Category> categories = await JadServices.GetCategories();
-            List<Operation> operations = await JadServices.GetOperations();
-            List<Recipe> recipes = await JadServices.GetRecipes();
-            ArticleToCreate articleToCreate = new ArticleToCreate
-            {
-                codeArticle = "D205541551",
-                codeCategorie = categories.First().Label,
-                codeOperation = operations.First().Code,
-                articles = new ArticleToCreateChildArticle[] { new ArticleToCreateChildArticle { codeArticle = "P361603178", quantite = 3 }, new ArticleToCreateChildArticle { codeArticle = "P736540925", quantite = 8 } }
-            };
-            await JadServices.PostArticle(articleToCreate);
+            Article article = await JadServices.GetArticleById(13);
+            //List<Article> articles = await JadServices.GetArticles();
+            //List<Category> categories = await JadServices.GetCategories();
+            //List<Operation> operations = await JadServices.GetOperations();
+            //List<Recipe> recipes = await JadServices.GetRecipes();
+            //ArticleToCreate articleToCreate = new ArticleToCreate
+            //{
+            //    codeArticle = "D205541551",
+            //    codeCategorie = categories.First().Label,
+            //    codeOperation = operations.First().Code,
+            //    articles = new ArticleToCreateChildArticle[] { new ArticleToCreateChildArticle { codeArticle = "P361603178", quantite = 3 }, new ArticleToCreateChildArticle { codeArticle = "P736540925", quantite = 8 } }
+            //};
+            //await JadServices.PostArticle(articleToCreate);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
