@@ -1,27 +1,33 @@
 ﻿import React, { useEffect, useState } from 'react';
 
+import { useHistory } from 'react-router-dom';
 
 export const Articles = (props) => {
-
+    let history = useHistory();
     const [articles, setArticles] = useState();
+    const handleDetail = (id) => {
+        history.push(`/article/${id}`)
+    };
 
     const getArticlesData = async () => {
-        const response = await fetch('ArticlesContoller');
+        const response = await fetch('articles');
         const data = await response.json();
-        setArticles(data);
+        const resultData = JSON.parse(data)
+ 
+        setArticles(resultData);
     }
 
     useEffect(() => {
+
         getArticlesData();
- 
+
     }, []);
 
     return (
 
-        <table className='table table-striped' aria-labelledby="tabelLabel">
+        <table className='table table-striped table-hover' aria-labelledby="tabelLabel">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Code</th>
                     <th>Libellé</th>
                     <th>Catégorie</th>
@@ -30,8 +36,12 @@ export const Articles = (props) => {
             </thead>
             <tbody>
                 {articles?.map(article =>
-                    <tr key={article.id}>
-                        <td>{article.id}</td>
+                    <tr key={article.id}
+                        onClick={(e) => {
+                            console.log("lala" + article.id)
+                        e.stopPropagation();
+                        handleDetail(article.id);
+                    }}>
                         <td>{article.code}</td>
                         <td>{article.libelle}</td>
                         <td>{article.id_categorie}</td>
