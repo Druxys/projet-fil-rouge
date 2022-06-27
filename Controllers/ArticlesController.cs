@@ -97,7 +97,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                         articleProductionTreeElementRecipe.OperationId = articleRecipe.OperationId;
 
                         firstComponent.Id = firstComponentArticle.Id;
-                        firstComponent.Quantity = (int)articleRecipe.FirstComponentQuantity;
+                        firstComponent.Quantity = (int)articleRecipe.FirstComponentQuantity * articleProductionTree.Quantity;
                         firstComponent.Code = firstComponentArticle.Code;
 
                         Recipe firstComponentRecipe = await JadServices.GetRecipeByArticleId(firstComponentArticle.Id);
@@ -118,7 +118,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                                 articleProductionTreeElementRecipe.OperationId = articleRecipe.OperationId;
 
                                 secondComponent.Id = secondComponentArticle.Id;
-                                secondComponent.Quantity = (int)articleRecipe.SecondComponentQuantity;
+                                secondComponent.Quantity = (int)articleRecipe.SecondComponentQuantity * articleProductionTree.Quantity;
                                 secondComponent.Code = secondComponentArticle.Code;
 
                                 Recipe secondComponentRecipe = await JadServices.GetRecipeByArticleId(secondComponentArticle.Id);
