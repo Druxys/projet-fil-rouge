@@ -53,6 +53,12 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                     if (entity == null)
                         return new StatusCodeResult(500);
                 }
+                else if (typeof(E).IsAssignableFrom(typeof(Recipe)))
+                {
+                    entity = await JadServices.GetRecipeByArticleId(id) as E;
+                    if (entity == null)
+                        return new StatusCodeResult(500);
+                }
 
                 if (entity == null)
                     return new NotFoundObjectResult("Aucune donnée existante avec cet ID");

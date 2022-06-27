@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
         public int Id { get; set; }
         public string PluralName { get; set; }
 
+        [JsonProperty]
         private int id
         {
             get { return Id; }

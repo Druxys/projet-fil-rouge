@@ -27,7 +27,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
 
         public static async Task<Article> GetArticleById(int id)
         {
-            if (id !< 0)
+            if (id < 0)
                 return null;
             HttpClient client = new HttpClient();
             string url = baseUrl + "article/" + id;
@@ -78,7 +78,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
 
         public static async Task<Category> GetCategoryById(int id)
         {
-            if (id !< 0)
+            if (id < 0)
                 return null;
             HttpClient client = new HttpClient();
             string url = baseUrl + "category/" + id;
@@ -102,7 +102,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
 
         public static async Task<Recipe> GetRecipeByArticleId(int articleId)
         {
-            if (articleId <= 0)
+            if (articleId < 0)
                 return null;
             HttpClient client = new HttpClient();
             string url = baseUrl + "recipe/" + articleId;

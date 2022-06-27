@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,31 +21,42 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
         public int? SecondComponentId { get; set; }
         public int? SecondComponentQuantity { get; set; }
 
+        [JsonProperty]
         private int id_article 
         {
             get { return ArticleId; }
             set { ArticleId = value; }
         }
+
+        [JsonProperty]
         private int id_operation
         {
             get { return OperationId; }
             set { OperationId = value; }
         }
+
+        [JsonProperty]
         private int? id_composant1
         {
             get { return FirstComponentId; }
             set { FirstComponentId = value; }
         }
+
+        [JsonProperty]
         private int? quantite1
         {
             get { return FirstComponentQuantity; }
             set { FirstComponentQuantity = value; }
         }
+
+        [JsonProperty]
         private int? id_composant2
         {
             get { return SecondComponentId; }
             set { SecondComponentId = value; }
         }
+
+        [JsonProperty]
         private int? quantite2
         {
             get { return SecondComponentQuantity; }
