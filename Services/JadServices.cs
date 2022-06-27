@@ -38,18 +38,18 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
             return JsonConvert.DeserializeObject<List<Article>>(result).FirstOrDefault();
         }
 
-        public static async Task<List<Article>> GetArticlesByCategoryId(int categoryId)
-        {
-            if (categoryId !> 0)
-                return null;
-            HttpClient client = new HttpClient();
-            string url = baseUrl + "articles/bycategory/" + categoryId;
-            HttpResponseMessage response = await client.GetAsync(url);
-            if (!(response.StatusCode == System.Net.HttpStatusCode.OK))
-                return null;
-            var result = response.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<List<Article>>(result);
-        }
+        //public static async Task<List<Article>> GetArticlesByCategoryId(int categoryId)
+        //{
+        //    if (categoryId !> 0)
+        //        return null;
+        //    HttpClient client = new HttpClient();
+        //    string url = baseUrl + "articles/bycategory/" + categoryId;
+        //    HttpResponseMessage response = await client.GetAsync(url);
+        //    if (!(response.StatusCode == System.Net.HttpStatusCode.OK))
+        //        return null;
+        //    var result = response.Content.ReadAsStringAsync().Result;
+        //    return JsonConvert.DeserializeObject<List<Article>>(result);
+        //}
 
         public static async Task<string> PostArticle(ArticleToCreate article)
         {

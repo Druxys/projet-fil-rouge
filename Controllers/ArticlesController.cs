@@ -6,6 +6,7 @@ using ProjetFilBleu_AppBureauxDEtudes.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
 {
@@ -17,13 +18,15 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
         public async Task<IActionResult> GetByCategoryId(int categoryId)
         {
             List<Article> articles = new List<Article>();
-            articles = await JadServices.GetArticlesByCategoryId(categoryId);
+            articles = await JadServices.GetArticles();
+            articles = articles.Where(a => a.CategoryId == categoryId).ToList();
             if (articles == null)
                 return new StatusCodeResult(500);
 
             return new JsonResult(JsonConvert.SerializeObject(articles));
         }
 
+        [HttpPost]
         public async Task<IActionResult> PostAsync(string articleJson)
         {
             try
