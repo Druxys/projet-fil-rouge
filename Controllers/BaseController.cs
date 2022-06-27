@@ -54,6 +54,9 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                         return new StatusCodeResult(500);
                 }
 
+                if (entity == null)
+                    return new NotFoundObjectResult("Aucune donnée existante avec cet id");
+
                 return new JsonResult(JsonConvert.SerializeObject(entity));
 
             }

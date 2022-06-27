@@ -46,5 +46,18 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                 return new StatusCodeResult(500);
             }
         }
+
+        //[HttpPost("product/{id}/{quantity?}")]
+        //public async Task<IActionResult> PostProductArticleAsync(int id, int quantity = 1)
+        //{
+        //    try
+        //    {
+        //        Article article = await JadServices.GetArticleById(id);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return new StatusCodeResult(500);
+        //    }
+        //}
     }
 }
