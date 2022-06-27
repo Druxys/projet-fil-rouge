@@ -102,7 +102,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
 
         public static async Task<Recipe> GetRecipeByArticleId(int articleId)
         {
-            if (articleId! > 0)
+            if (articleId <= 0)
                 return null;
             HttpClient client = new HttpClient();
             string url = baseUrl + "recipe/" + articleId;
@@ -110,7 +110,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
             if (!(response.StatusCode == System.Net.HttpStatusCode.OK))
                 return null;
             var result = response.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<Recipe>(result);
+            return JsonConvert.DeserializeObject<List<Recipe>>(result).FirstOrDefault();
         }
 
         public static async Task<List<Operation>> GetOperations()
