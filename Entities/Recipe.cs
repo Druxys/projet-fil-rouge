@@ -15,8 +15,8 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
         public int ArticleId { get; set; }
         public int OperationId { get; set; }
         // les composants sont des articles
-        public int FirstComponentId { get; set; } 
-        public int FirstComponentQuantity { get; set; }
+        public int? FirstComponentId { get; set; } 
+        public int? FirstComponentQuantity { get; set; }
         public int? SecondComponentId { get; set; }
         public int? SecondComponentQuantity { get; set; }
 
@@ -30,12 +30,12 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
             get { return OperationId; }
             set { OperationId = value; }
         }
-        private int id_composant1
+        private int? id_composant1
         {
             get { return FirstComponentId; }
             set { FirstComponentId = value; }
         }
-        private int quantite1
+        private int? quantite1
         {
             get { return FirstComponentQuantity; }
             set { FirstComponentQuantity = value; }

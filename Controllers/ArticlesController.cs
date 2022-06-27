@@ -47,17 +47,98 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
             }
         }
 
-        //[HttpPost("product/{id}/{quantity?}")]
-        //public async Task<IActionResult> PostProductArticleAsync(int id, int quantity = 1)
-        //{
-        //    try
-        //    {
-        //        Article article = await JadServices.GetArticleById(id);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return new StatusCodeResult(500);
-        //    }
-        //}
+        [HttpPost("product/{id}/{quantity?}")]
+        public async Task<IActionResult> PostProductArticleAsync(int id, int quantity = 1)
+        {
+            try
+            {
+                Article article = await JadServices.GetArticleById(id);
+                if (article == null)
+                    return new NotFoundObjectResult("Aucun article existant avec cet ID");
+
+                ArticleProductionTreeElement articleProductionTree = new ArticleProductionTreeElement();
+
+                Recipe articleRecipe = await JadServices.GetRecipeByArticleId(article.Id);
+                if (articleRecipe == null)
+                    return new NotFoundObjectResult("Impossible de trouver la recette de cet article");
+
+                articleProductionTree.Id = article.Id;
+                articleProductionTree.Quantity = quantity;
+                articleProductionTree.Code = article.Code;
+                articleProductionTree = await SetArticleRecipe(articleRecipe, articleProductionTree);
+
+                string articleProductionTreeJson = JsonConvert.SerializeObject(articleProductionTree);
+
+                return new OkResult();
+            }
+            catch (Exception e)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        private async Task<ArticleProductionTreeElement> SetArticleRecipe(Recipe articleRecipe, ArticleProductionTreeElement articleProductionTree)
+        {
+            try
+            {
+                ArticleProductionTreeElementRecipe articleProductionTreeElementRecipe = new ArticleProductionTreeElementRecipe();
+                ArticleProductionTreeElement firstComponent = new ArticleProductionTreeElement();
+                ArticleProductionTreeElement secondComponent = new ArticleProductionTreeElement();
+
+                if (articleRecipe.SecondComponentId == null && articleRecipe.FirstComponentId == null)
+                    articleProductionTreeElementRecipe = null;
+                else
+                {
+                    Article firstComponentArticle = await JadServices.GetArticleById((int)articleRecipe.FirstComponentId);
+                    if (firstComponentArticle == null)
+                        articleProductionTreeElementRecipe = null;
+                    else
+                    {
+                        articleProductionTreeElementRecipe.OperationId = articleRecipe.OperationId;
+
+                        firstComponent.Id = firstComponentArticle.Id;
+                        firstComponent.Quantity = (int)articleRecipe.FirstComponentQuantity;
+                        firstComponent.Code = firstComponentArticle.Code;
+
+                        Recipe firstComponentRecipe = await JadServices.GetRecipeByArticleId(firstComponentArticle.Id);
+                        if (firstComponentRecipe == null)
+                            firstComponent.Recipe = null;
+                        else
+                            firstComponent = await SetArticleRecipe(firstComponentRecipe, firstComponent);
+
+                        articleProductionTreeElementRecipe.FirstComponent = firstComponent;
+
+
+                        Article secondComponentArticle = await JadServices.GetArticleById((int)articleRecipe.SecondComponentId);
+                        if (secondComponentArticle == null)
+                            articleProductionTreeElementRecipe.SecondComponent = null;
+                        else
+                        {
+                            articleProductionTreeElementRecipe.OperationId = articleRecipe.OperationId;
+
+                            secondComponent.Id = secondComponentArticle.Id;
+                            secondComponent.Quantity = (int)articleRecipe.SecondComponentQuantity;
+                            secondComponent.Code = secondComponentArticle.Code;
+
+                            Recipe secondComponentRecipe = await JadServices.GetRecipeByArticleId(secondComponentArticle.Id);
+                            if (secondComponentRecipe == null)
+                                secondComponent.Recipe = null;
+                            else
+                                secondComponent = await SetArticleRecipe(secondComponentRecipe, secondComponent);
+
+                            articleProductionTreeElementRecipe.SecondComponent = secondComponent;
+                        }
+                    }
+                }
+
+                articleProductionTree.Recipe = articleProductionTreeElementRecipe;
+
+                return articleProductionTree;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }
