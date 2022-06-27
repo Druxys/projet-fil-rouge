@@ -17,25 +17,25 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
         public string Delay { get; set; }
         public string InstallationDelay { get; set; }
 
-        public string code
+        private string code
         {
             get { return Code; }
             set { Code = value; }
         }
 
-        public string libelle
+        private string libelle
         {
             get { return Label; }
             set { Label = value; }
         }
 
-        public string delai
+        private string delai
         {
             get { return Delay; }
             set { Delay = value; }
         }
 
-        public string delaiInstallation
+        private string delaiInstallation
         {
             get { return InstallationDelay; }
             set { InstallationDelay = value; }

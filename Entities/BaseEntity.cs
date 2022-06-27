@@ -10,7 +10,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
         public int Id { get; set; }
         public string PluralName { get; set; }
 
-        public int id
+        private int id
         {
             get { return Id; }
             set { Id = value; }

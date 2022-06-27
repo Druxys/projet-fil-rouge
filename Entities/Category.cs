@@ -15,13 +15,13 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
         public string Code { get; set; }
         public string Label { get; set; }
 
-        public string code
+        private string code
         {
             get { return Code; }
             set { Code = value; }
         }
 
-        public string libelle
+        private string libelle
         {
             get { return Label; }
             set { Label = value; }

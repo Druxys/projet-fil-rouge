@@ -17,18 +17,18 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Entities
         public int CategoryId { get; set; }
 
 
-        public string code { 
+        private string code { 
             get { return Code; }
             set { Code = value; } 
         }
 
-        public string libelle
+        private string libelle
         {
             get { return Label; }
             set { Label = value; }
         }
 
-        public int id_categorie
+        private int id_categorie
         {
             get { return CategoryId; }
             set { CategoryId = value; }
