@@ -10,10 +10,12 @@ import AddIcon from '@mui/icons-material/Add';
 export const ArticlesForm = (props) => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [articles, setArticles] = useState();
+    const [categories, setCategories] = useState();
+    const [operations, setOperations] = useState();
     const [dataList, setDataList] = useState([{ codeArticle: '', quantite: '' }]);
 
-    console.log(dataList);
-    console.log(watch("example")); // watch input value by passing the name of it
+    //console.log(dataList);
+    //console.log(watch("example")); // watch input value by passing the name of it
     const onSubmit = data => console.log(data);
 
     const getArticlesData = async () => {
@@ -27,13 +29,50 @@ export const ArticlesForm = (props) => {
         getArticlesData();
     }, []);
 
+    const getCategoriesData = async () => {
+        const response = await fetch('categories');
+        const data = await response.json();
+        const resultData = JSON.parse(data)
+        setCategories(resultData);
+    }
+
+    useEffect(() => {
+        getCategoriesData();
+    }, []);
+
+    //const getOperationsData = async () => {
+    //    const response = await fetch('operations');
+    //    const data = await response.json();
+    //    const resultData = JSON.parse(data)
+    //    setOperations(resultData);
+    //}
+
+    //useEffect(() => {
+    //    getOperationsData();
+    //}, []);
+
     const articleOptions = articles?.map((article) => ({
         label: article.code,
         value: article.id,
     }));
 
-    const handleChange = (e,index) => {
-  
+
+    const categoryOptions = categories?.map((category) => ({
+        label: category.libelle,
+        value: category.code,
+    }));
+
+    //const operationOptions = categories?.map((operation) => ({
+    //    label: operation.libelle,
+    //    value: operation.code,
+    //}));
+
+    const isEmpty = !!categories;
+    console.log(isEmpty)
+    console.log(categories);
+
+    const handleChange = (e, index) => {
+
         const { name, value } = e.target;
         console.log(e, index);
         console.log(e.target);
@@ -41,6 +80,7 @@ export const ArticlesForm = (props) => {
         list[index][name] = value;
         setDataList(list)
     };
+
     const handleChangeQuantity = (e, index) => {
         const { name, value } = e.target;
         const list = [...dataList];
@@ -77,12 +117,23 @@ export const ArticlesForm = (props) => {
                     <Grid item xs={12}>
                         <FormControl fullWidth >
                             <InputLabel id="codeCategorie">Catégorie</InputLabel>
+
                             <Select
-                                fullWidth
                                 labelId="codeCategorie"
-                                {...register("codeCategorie")}
-                                input={<OutlinedInput label="Catégorie" />}
+                                value={categoryOptions}
+                                onChange={(e) => console.log(e)}
+                                fullWidth
+                                name="codeArticle"
                             >
+                                {categoryOptions?.map((article) => {
+                                    return (
+                                        <MenuItem key={article?.value} value={article?.label}>
+                                            {article?.value}
+                                        </MenuItem>
+                                    )
+                                }
+                                )
+                                }
                             </Select>
                         </FormControl>
                     </Grid>
@@ -106,15 +157,14 @@ export const ArticlesForm = (props) => {
                                     {/*        name =ref0?.current?.getAttribute("name")*/}
                                     {/*        console.log(ref0?.current?.getAttribute("name"));*/}
                                     {/*    }}*/}
-                                       
+
 
                                     {/*    renderInput={(params) => <TextField {...params} onChange={(e) => console.log('lala')} label="codeArticle" />}*/}
                                     {/*/>*/}
                                     <Select
                                         labelId="articleId"
                                         value={element?.codeArticle}
-                                        onChange={(e) => handleChange(e, index)}
-                                        autoWidth
+                                        onChange={(e) => handleChange(e, index)}                                       
                                         name="codeArticle"
                                     >
                                         {articleOptions?.map((article) => {
