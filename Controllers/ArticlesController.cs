@@ -67,7 +67,10 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                 articleProductionTree.Code = article.Code;
                 articleProductionTree = await SetArticleRecipe(articleRecipe, articleProductionTree);
 
-                string articleProductionTreeJson = JsonConvert.SerializeObject(articleProductionTree);
+                bool sendResult = await ProductionServices.SendProductionNotification(articleProductionTree);
+
+                if (!sendResult)
+                    return new BadRequestObjectResult("Un problème est intervenu lors de l'envoi de l'ordre de production de l'article");
 
                 return new OkResult();
             }
