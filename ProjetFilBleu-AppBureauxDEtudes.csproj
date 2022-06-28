@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\components\ArticleDetails.cs" />
+    <None Remove="ClientApp\src\components\Providers.js" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

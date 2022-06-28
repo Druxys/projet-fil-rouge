@@ -27,6 +27,8 @@ export class NavMenu extends Component {
                     </li>
                     <li>
                         <NavLink tag={Link} className="text-white" to="/articles">Articles</NavLink>
+                    </li>    <li>
+                        <NavLink tag={Link} className="text-white" to="/new-article">Creation</NavLink>
                     </li>
                 </ul>
             </div>
