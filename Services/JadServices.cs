@@ -123,5 +123,18 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
             var result = response.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<List<Operation>>(result);
         }
+
+        public static async Task<Operation> GetOperationById(int id)
+        {
+            if (id < 0)
+                return null;
+            HttpClient client = new HttpClient();
+            string url = baseUrl + "operation/" + id;
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (!(response.StatusCode == System.Net.HttpStatusCode.OK))
+                return null;
+            var result = response.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<List<Operation>>(result).FirstOrDefault();
+        }
     }
 }
