@@ -27,7 +27,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(string articleJson)
+        public async Task<IActionResult> PostAsync([FromBody]string articleJson)
         {
             try
             {

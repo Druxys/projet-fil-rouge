@@ -2,13 +2,13 @@
 import { useForm } from "react-hook-form";
 import {
     Box, Button, Grid, TextField, Select,
-    InputLabel,  Fab, FormControl,
-    Typography,  MenuItem
+    InputLabel, Fab, FormControl,
+    Typography, MenuItem
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 const axios = require('axios');
 export const ArticlesForm = (props) => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [articles, setArticles] = useState();
     const [categories, setCategories] = useState();
     const [operations, setOperations] = useState();
@@ -18,7 +18,7 @@ export const ArticlesForm = (props) => {
     const [categoryValue, setCategoryValue] = useState()
 
     //console.log(watch("example")); // watch input value by passing the name of it
- 
+
 
     const getArticlesData = async () => {
         const response = await fetch('articles');
@@ -69,7 +69,7 @@ export const ArticlesForm = (props) => {
         value: operation.code,
     }));
 
-   
+
 
 
     const handleChange = (e, index) => {
@@ -89,13 +89,13 @@ export const ArticlesForm = (props) => {
     const handleChangeOperation = (e) => {
         setOperationValue(e.target.value)
     };
-    
+
     const handleChangeCategory = (e) => {
         setCategoryValue(e.target.value)
     };
 
     const handleDatalistAdd = () => {
-        setDataList([...dataList, {  codeArticle: '', quantite: '' }])
+        setDataList([...dataList, { codeArticle: '', quantite: '' }])
     }
 
     const handleDatalistRemove = (index) => {
@@ -105,16 +105,23 @@ export const ArticlesForm = (props) => {
     }
 
 
-    const onSubmit = (data) => { 
-        const articles = {articles: dataList}
+    const onSubmit = (data) => {
+        const articles = { articles: dataList }
         const { codeCategorie, codeArticleNew, codeOperation } = data
         const codeArticle = codeArticleNew
-        const values = { ...articles, codeCategorie, codeArticle,  codeOperation }
-      
-        const articleJson = JSON.stringify(values);
-        console.log(articleJson);
+        const values = { ...articles, codeCategorie, codeArticle, codeOperation }
 
-        axios.post('articles', JSON.stringify(articleJson))
+     
+        const result = JSON.stringify(values);
+        const articleJson = JSON.stringify(result).toString();
+        console.log(articleJson);
+        console.log(result);
+
+        axios.post('articles', articleJson, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 console.log("Status: ", response.status);
                 console.log("Data: ", response.data);
@@ -150,7 +157,7 @@ export const ArticlesForm = (props) => {
                                 onChange={handleChangeCategory}
                                 fullWidth
                                 {...register("codeCategorie")}
-                            
+
                             >
                                 {categoryOptions?.map((category) => {
                                     return (
@@ -171,77 +178,77 @@ export const ArticlesForm = (props) => {
                     </Grid>
 
                     {dataList.map((element, index) => (
-                    <>
-                        <Grid container spacing={3} ml="5px" key={index}>
-                            <Grid mb="2rem" item xs={5}>
-                                <FormControl fullWidth>
-                                    <InputLabel id="articleId">Articles</InputLabel>
-                                    {/*<Autocomplete*/}
-                                    {/*    disablePortal*/}
-                                    {/*    name="codeArticle"*/}
-                                    {/*    options={!!articleOptions ? articleOptions : []}*/}
-                                    {/*    ref={ref0}*/}
-                                    {/*    onChange={(e, v, r, name) => {*/}
-                                    {/*        name =ref0?.current?.getAttribute("name")*/}
-                                    {/*        console.log(ref0?.current?.getAttribute("name"));*/}
-                                    {/*    }}*/}
+                        <>
+                            <Grid container spacing={3} ml="5px" key={index}>
+                                <Grid mb="2rem" item xs={5}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="articleId">Articles</InputLabel>
+                                        {/*<Autocomplete*/}
+                                        {/*    disablePortal*/}
+                                        {/*    name="codeArticle"*/}
+                                        {/*    options={!!articleOptions ? articleOptions : []}*/}
+                                        {/*    ref={ref0}*/}
+                                        {/*    onChange={(e, v, r, name) => {*/}
+                                        {/*        name =ref0?.current?.getAttribute("name")*/}
+                                        {/*        console.log(ref0?.current?.getAttribute("name"));*/}
+                                        {/*    }}*/}
 
 
-                                    {/*    renderInput={(params) => <TextField {...params} onChange={(e) => console.log('lala')} label="codeArticle" />}*/}
-                                    {/*/>*/}
-                                    <Select
-                                        labelId="articleId"
-                                        value={element?.codeArticle}
-                                        onChange={(e) => handleChange(e, index)}
-                                        inputProps={register('codeArticle')}
-                                         
-                                    >
-                                        {articleOptions?.map((article) => {
-                                            return (
-                                                <MenuItem key={article?.value} value={article?.label}>
-                                                    {article?.label}
-                                                </MenuItem>
-                                            )
-                                        }
-                                        )};
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={5}>
-                                <TextField
-                                    fullWidth
-                                    id="quantiteNumber"
-                                    label="Number"
-                                    type="number"
-                                    value={element?.quantite}
-                                        {...register("quantite")}
-                                    onChange={(e) => handleChangeQuantity(e, index)}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                            </Grid>
-                            {dataList.length > 1 && (
-                                <Grid item xs={2}>
-                                    <Button variant="contained" onClick={() => handleDatalistRemove(index)}>Supprimer</Button>
+                                        {/*    renderInput={(params) => <TextField {...params} onChange={(e) => console.log('lala')} label="codeArticle" />}*/}
+                                        {/*/>*/}
+                                        <Select
+                                            labelId="articleId"
+                                            value={element?.codeArticle}
+                                            onChange={(e) => handleChange(e, index)}
+                                            inputProps={register('codeArticle')}
+
+                                        >
+                                            {articleOptions?.map((article) => {
+                                                return (
+                                                    <MenuItem key={article?.value} value={article?.label}>
+                                                        {article?.label}
+                                                    </MenuItem>
+                                                )
+                                            }
+                                            )};
+                                        </Select>
+                                    </FormControl>
                                 </Grid>
-                            )}
+                                <Grid item xs={5}>
+                                    <TextField
+                                        fullWidth
+                                        id="quantiteNumber"
+                                        label="Number"
+                                        type="number"
+                                        value={element?.quantite}
+                                        {...register("quantite")}
+                                        onChange={(e) => handleChangeQuantity(e, index)}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                </Grid>
+                                {dataList.length > 1 && (
+                                    <Grid item xs={2}>
+                                        <Button variant="contained" onClick={() => handleDatalistRemove(index)}>Supprimer</Button>
+                                    </Grid>
+                                )}
 
 
-                            {dataList.length - 1 === index && dataList.length < 2 && (
-                                <Box >
-                                    <Typography variant="h6" component="h6">
-                                        Ajouter un composant
-                                    </Typography>
-                                    <Fab color="primary" onClick={handleDatalistAdd} aria-label="add">
-                                        <AddIcon />
-                                    </Fab>
-                                </Box>
+                                {dataList.length - 1 === index && dataList.length < 2 && (
+                                    <Box >
+                                        <Typography variant="h6" component="h6">
+                                            Ajouter un composant
+                                        </Typography>
+                                        <Fab color="primary" onClick={handleDatalistAdd} aria-label="add">
+                                            <AddIcon />
+                                        </Fab>
+                                    </Box>
 
-                            )}
-                        </Grid>
+                                )}
+                            </Grid>
 
-</>
+                        </>
                     ))}
                     <Grid item xs={12}>
                         <FormControl fullWidth >
@@ -270,7 +277,7 @@ export const ArticlesForm = (props) => {
                         <input type="submit" />
                     </Grid>
                 </Grid>
-              
+
             </form>
         </Box>
     );
