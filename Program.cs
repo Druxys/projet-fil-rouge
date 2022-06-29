@@ -23,8 +23,8 @@ namespace ProjetFilBleu_AppBureauxDEtudes
 
         public static async void CallJadServices()
         {
-            Article article = await JadServices.GetArticleById(13);
-            Recipe recipe = await JadServices.GetRecipeByArticleId(2);
+            //Article article = await JadServices.GetArticleById(13);
+            //Recipe recipe = await JadServices.GetRecipeByArticleId(2);
             //List<Article> articles = await JadServices.GetArticles();
             //List<Category> categories = await JadServices.GetCategories();
             //List<Operation> operations = await JadServices.GetOperations();
