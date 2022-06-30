@@ -12,12 +12,13 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Services
 {
     public class ProductionServices
     {
-        private static string baseUrl = "http://localhost:5000";
+        private static string baseUrl = "https://localhost:44325/production";
 
         public static async Task<bool> SendProductionNotification(ArticleProductionTreeElement articleProductionTree)
         {
             HttpClient client = new HttpClient();
             string url = baseUrl;
+            client.Timeout = TimeSpan.FromSeconds(900);
             StringContent requestContent = new StringContent(JsonConvert.SerializeObject(articleProductionTree));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             HttpResponseMessage response = await client.PostAsync(url, requestContent);
