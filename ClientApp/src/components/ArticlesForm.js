@@ -16,9 +16,7 @@ export const ArticlesForm = (props) => {
 
     const [operationValue, setOperationValue] = useState()
     const [categoryValue, setCategoryValue] = useState()
-
-    //console.log(watch("example")); // watch input value by passing the name of it
-
+    const [test, settest] = useState(false)
 
     const getArticlesData = async () => {
         const response = await fetch('articles');
@@ -27,9 +25,6 @@ export const ArticlesForm = (props) => {
         setArticles(resultData);
     }
 
-    useEffect(() => {
-        getArticlesData();
-    }, []);
 
     const getCategoriesData = async () => {
         const response = await fetch('categories');
@@ -37,10 +32,8 @@ export const ArticlesForm = (props) => {
         const resultData = JSON.parse(data)
         setCategories(resultData);
     }
-    //console.log(dataList)
-    useEffect(() => {
-        getCategoriesData();
-    }, []);
+
+
 
     const getOperationsData = async () => {
         const response = await fetch('operations');
@@ -50,6 +43,8 @@ export const ArticlesForm = (props) => {
     }
 
     useEffect(() => {
+        getArticlesData();
+        getCategoriesData();
         getOperationsData();
     }, []);
 
@@ -68,9 +63,6 @@ export const ArticlesForm = (props) => {
         label: operation.libelle,
         value: operation.code,
     }));
-
-
-
 
     const handleChange = (e, index) => {
         const { name, value } = e.target;
@@ -124,12 +116,14 @@ export const ArticlesForm = (props) => {
         })
             .then(response => {
                 console.log("Status: ", response.status);
+                settest(true);
+                console.log(test);
                 console.log("Data: ", response.data);
             }).catch(error => {
                 console.error('Something went wrong!', error);
             });
     };
-
+    console.log(test);
     const ref0 = useRef();
     return (
         <Box sx={{ flexGrow: 1 }} mt="10rem">
@@ -147,7 +141,7 @@ export const ArticlesForm = (props) => {
                         <TextField fullWidth  {...register("codeArticleNew", { required: true })} label="Code article" />
                         {errors.exampleRequired && <span>This field is required</span>}
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid mt="2rem" item xs={12}>
                         <FormControl fullWidth >
                             <InputLabel id="codeCategorie">Catégorie</InputLabel>
 
@@ -236,7 +230,7 @@ export const ArticlesForm = (props) => {
 
 
                                 {dataList.length - 1 === index && dataList.length < 2 && (
-                                    <Box >
+                                    <Box ml="2rem">
                                         <Typography variant="h6" component="h6">
                                             Ajouter un composant
                                         </Typography>
@@ -250,7 +244,7 @@ export const ArticlesForm = (props) => {
 
                         </>
                     ))}
-                    <Grid item xs={12}>
+                    <Grid mt="2rem" item xs={12}>
                         <FormControl fullWidth >
                             <InputLabel id="codeOperation">Opération</InputLabel>
 
@@ -273,8 +267,9 @@ export const ArticlesForm = (props) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={6}>
-                        <input type="submit" />
+                    <Grid mt="4rem" item xs={6}>
+                        <Button fullWidth variant="contained" type="submit" > Créer</Button>
+                        {/*<input type="submit" />*/}
                     </Grid>
                 </Grid>
 

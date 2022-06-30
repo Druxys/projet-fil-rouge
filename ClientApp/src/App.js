@@ -19,13 +19,7 @@ export default class App extends Component {
                 <Layout>
                     <Route exact path="/">
                         <Home />
-                    </Route>
-                    <Route path="/counter">
-                        <Counter />
-                    </Route>
-                    <Route path="/fetch-data">
-                        <Fettchdata />
-                    </Route>
+                    </Route>               
                     <Route path="/articles">
                         <Articles />
                     </Route>
