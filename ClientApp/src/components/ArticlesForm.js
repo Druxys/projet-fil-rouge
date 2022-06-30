@@ -161,7 +161,7 @@ export const ArticlesForm = (props) => {
                             >
                                 {categoryOptions?.map((category) => {
                                     return (
-                                        <MenuItem key={category?.value} value={category?.label}>
+                                        <MenuItem key={category?.value} value={category?.value}>
                                             {category?.value}
                                         </MenuItem>
                                     )

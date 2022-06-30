@@ -86,13 +86,14 @@ export const ArticleDetails = (props) => {
                     </Typography>
                     <TextField disabled fullWidth value={article?.id_categorie} />
                 </Grid>
-                <Grid mb="2rem" item xs={6}>
+                <Grid mb="2rem" item xs={12}>
                     <Button variant="contained" onClick={() => showFormProd()}>Lancer la production</Button>
                 </Grid>
                 {!!formProd && (
+                    <Grid mb="2rem" item xs={12}>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                        <Grid item xs={12}>
+                  
+                            <Grid mb="2rem" item xs={12}>
                             <TextField
                                 fullWidth
                                 id="quantiteNumber"
@@ -105,12 +106,13 @@ export const ArticleDetails = (props) => {
                                     shrink: true,
                                 }}
                             />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <input type="submit" />
                             </Grid>
-                        </Grid>
-                    </form>
+                        <Grid item xs={12}>
+                                <input  type="submit" />
+                            </Grid>
+                 
+                        </form>
+                    </Grid>
                 )}
             </Grid>
         </Box>
