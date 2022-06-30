@@ -35,6 +35,8 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                     return new BadRequestObjectResult("Aucun article n'a été envoyé dans la requête");
                 ArticleToCreate article = JsonConvert.DeserializeObject<ArticleToCreate>(articleJson);
 
+                if (article.codeArticle.Length != 10)
+                    return new BadRequestObjectResult("Le code article saisi n'est pas valide. La longueur du code article doit être égale à 10 caractères");
                 string response = await JadServices.PostArticle(article);
                 if (response != "Success")
                     return new BadRequestObjectResult(response);
@@ -72,9 +74,9 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                 bool sendResult = await ProductionServices.SendProductionNotification(articleProductionTree);
 
                 if (!sendResult)
-                    return new BadRequestObjectResult("Un problème est intervenu lors de l'envoi de l'ordre de production de l'article");
+                    return new BadRequestObjectResult("Un problème est intervenu lors de la production de l'article " + article.Code);
 
-                return new OkResult();
+                return new OkObjectResult("La production de " + quantity + " de l'article " + article.Code + " a été effectuée avec succès.");
             }
             catch (Exception e)
             {
