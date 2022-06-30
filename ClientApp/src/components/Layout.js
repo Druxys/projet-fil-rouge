@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
 import { NavMenu } from './NavMenu';
-
+import { Container, Row, Col } from "reactstrap";
 export class Layout extends Component {
   static displayName = Layout.name;
 
   render () {
-    return (
-      <div>
-        <NavMenu />
-        <Container>
-          {this.props.children}
-        </Container>
-      </div>
+      return (
+         <>
+              <Container fluid>
+        <Row>
+                    <Col xs={2} id="sidebar-wrapper">      
+                          <NavMenu />
+                    </Col>
+                    <Col  xs={10} id="page-content-wrapper">
+                         {this.props.children}
+                    </Col> 
+                </Row>
+   
+          
+      
+              </Container>
+          </>
     );
   }
 }
