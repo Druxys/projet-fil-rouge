@@ -56,6 +56,8 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                 if (article == null)
                     return new NotFoundObjectResult("Aucun article existant avec cet ID");
 
+                List<Article> allArticles = await JadServices.GetArticles();
+                List<Recipe> allRecipes = await JadServices.GetRecipes();
                 ArticleProductionTreeElement articleProductionTree = new ArticleProductionTreeElement();
 
                 Recipe articleRecipe = await JadServices.GetRecipeByArticleId(article.Id);
@@ -65,7 +67,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                 articleProductionTree.Id = article.Id;
                 articleProductionTree.Quantity = quantity;
                 articleProductionTree.Code = article.Code;
-                articleProductionTree = await SetArticleRecipe(articleRecipe, articleProductionTree);
+                articleProductionTree = await SetArticleRecipe(allArticles, allRecipes, articleRecipe, articleProductionTree);
 
                 bool sendResult = await ProductionServices.SendProductionNotification(articleProductionTree);
 
@@ -80,7 +82,7 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
             }
         }
 
-        private async Task<ArticleProductionTreeElement> SetArticleRecipe(Recipe articleRecipe, ArticleProductionTreeElement articleProductionTree)
+        private async Task<ArticleProductionTreeElement> SetArticleRecipe(List<Article> allArticles, List<Recipe> allRecipes, Recipe articleRecipe, ArticleProductionTreeElement articleProductionTree)
         {
             try
             {
@@ -92,7 +94,8 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                     articleProductionTreeElementRecipe = null;
                 else
                 {
-                    Article firstComponentArticle = await JadServices.GetArticleById((int)articleRecipe.FirstComponentId);
+                    //Article firstComponentArticle = await JadServices.GetArticleById((int)articleRecipe.FirstComponentId);
+                    Article firstComponentArticle = allArticles.SingleOrDefault(a => a.Id == (int)articleRecipe.FirstComponentId);
                     if (firstComponentArticle == null)
                         articleProductionTreeElementRecipe = null;
                     else
@@ -103,17 +106,19 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                         firstComponent.Quantity = (int)articleRecipe.FirstComponentQuantity * articleProductionTree.Quantity;
                         firstComponent.Code = firstComponentArticle.Code;
 
-                        Recipe firstComponentRecipe = await JadServices.GetRecipeByArticleId(firstComponentArticle.Id);
+                        //Recipe firstComponentRecipe = await JadServices.GetRecipeByArticleId(firstComponentArticle.Id);
+                        Recipe firstComponentRecipe = allRecipes.SingleOrDefault(r => r.ArticleId == (int)articleRecipe.FirstComponentId);
                         if (firstComponentRecipe == null)
                             firstComponent.Recipe = null;
                         else
-                            firstComponent = await SetArticleRecipe(firstComponentRecipe, firstComponent);
+                            firstComponent = await SetArticleRecipe(allArticles, allRecipes, firstComponentRecipe, firstComponent);
 
                         articleProductionTreeElementRecipe.FirstComponent = firstComponent;
 
                         if (articleRecipe.SecondComponentId != null)
                         {
-                            Article secondComponentArticle = await JadServices.GetArticleById((int)articleRecipe.SecondComponentId);
+                            //Article secondComponentArticle = await JadServices.GetArticleById((int)articleRecipe.SecondComponentId);
+                            Article secondComponentArticle = allArticles.SingleOrDefault(a => a.Id == (int)articleRecipe.SecondComponentId);
                             if (secondComponentArticle == null)
                                 articleProductionTreeElementRecipe.SecondComponent = null;
                             else
@@ -124,11 +129,12 @@ namespace ProjetFilBleu_AppBureauxDEtudes.Controllers
                                 secondComponent.Quantity = (int)articleRecipe.SecondComponentQuantity * articleProductionTree.Quantity;
                                 secondComponent.Code = secondComponentArticle.Code;
 
-                                Recipe secondComponentRecipe = await JadServices.GetRecipeByArticleId(secondComponentArticle.Id);
+                                //Recipe secondComponentRecipe = await JadServices.GetRecipeByArticleId(secondComponentArticle.Id);
+                                Recipe secondComponentRecipe = allRecipes.SingleOrDefault(r => r.ArticleId == (int)articleRecipe.SecondComponentId);
                                 if (secondComponentRecipe == null)
                                     secondComponent.Recipe = null;
                                 else
-                                    secondComponent = await SetArticleRecipe(secondComponentRecipe, secondComponent);
+                                    secondComponent = await SetArticleRecipe(allArticles, allRecipes, secondComponentRecipe, secondComponent);
 
                                 articleProductionTreeElementRecipe.SecondComponent = secondComponent;
                             }

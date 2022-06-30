@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ProjetFilBleu_AppBureauxDEtudes.Controllers;
 using ProjetFilBleu_AppBureauxDEtudes.DTOs;
 using ProjetFilBleu_AppBureauxDEtudes.Entities;
@@ -23,21 +24,22 @@ namespace ProjetFilBleu_AppBureauxDEtudes
 
         public static async void CallJadServices()
         {
-            Article article = await JadServices.GetArticleById(13);
-            Recipe recipe = await JadServices.GetRecipeByArticleId(2);
+            //Article article = await JadServices.GetArticleById(13);
+            //Recipe recipe = await JadServices.GetRecipeByArticleId(2);
             //List<Article> articles = await JadServices.GetArticles();
             //List<Category> categories = await JadServices.GetCategories();
             //List<Operation> operations = await JadServices.GetOperations();
             //List<Recipe> recipes = await JadServices.GetRecipes();
             //ArticleToCreate articleToCreate = new ArticleToCreate
             //{
-            //    codeArticle = "D205541551",
-            //    codeCategorie = categories.First().Label,
+            //    codeArticle = "P915877727",
+            //    codeCategorie = categories.First().Code,
             //    codeOperation = operations.First().Code,
             //    articles = new ArticleToCreateChildArticle[] { new ArticleToCreateChildArticle { codeArticle = "P361603178", quantite = 3 }, new ArticleToCreateChildArticle { codeArticle = "P736540925", quantite = 8 } }
             //};
+            //string json = JsonConvert.SerializeObject(new ArticleToCreate[] { articleToCreate });
             //await JadServices.PostArticle(articleToCreate);
-            bool wait = false;
+            //bool wait = false;
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
