@@ -107,9 +107,12 @@ export const ArticleDetails = (props) => {
                                 }}
                             />
                             </Grid>
-                        <Grid item xs={12}>
-                                <input  type="submit" />
+                     
+                            <Grid item xs={6}>
+                                <Button fullWidth variant="contained" type="submit" > Lancer</Button>
+                               {/* <input  type="submit" />*/}
                             </Grid>
+    
                  
                         </form>
                     </Grid>

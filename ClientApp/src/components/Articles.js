@@ -2,9 +2,12 @@
 
 import { useHistory } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
 
+
+import {
+    Grid,
+    Typography
+} from '@mui/material';
 export const Articles = (props) => {
     let history = useHistory();
     const [articles, setArticles] = useState();
@@ -19,79 +22,72 @@ export const Articles = (props) => {
 
         setArticles(resultData);
     }
-
     useEffect(() => {
-
         getArticlesData();
-
     }, []);
+    const localizedTextsMap = {
+        columnMenuUnsort: "Sans tri",
+        columnMenuSortAsc: "Trier par ASC",
+        columnMenuSortDesc: "Trier par DESC",
+        columnMenuFilter: "Filtrer",
+        columnMenuHideColumn: "Masquer colonne",
+        columnMenuShowColumns: "Afficher colonne"
+    };
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'code', headerName: 'Code', width: 130 },
-        { field: 'libelle', headerName: 'Libellé', width: 130 },
+        { field: 'Id', headerName: 'ID', width: 70 },
+        { field: 'Code', headerName: 'Code', width: 130 },
+        { field: 'Label', headerName: 'Libellé', width: 130 },
         {
-            field: 'categorie',
+            field: 'CategoryId',
             headerName: 'Catégorie',
             width: 90,
         },
-        {
-            field: 'action',
-            headerName: 'Actions',
-            sortable: false,
-            width: 160,
-            renderCell: (params) => (
-                <IconButton onClick={() => alert("delete")}>
-                    <DeleteIcon />
-                </IconButton>
-            )
-         
-        },
+        //{
+        //    field: 'action',
+        //    headerName: 'Actions',
+        //    sortable: false,
+        //    width: 160,
+        //    renderCell: (params) => (
+        //        <IconButton onClick={() => alert("delete")}>
+        //            <DeleteIcon />
+        //        </IconButton>
+        //    )
+
+        //},
     ];
 
-    console.log(articles)
     return (
-        <DataGrid
-        rows={!!articles ? articles : []}
-        columns={columns}
-        pageSize={20}
-        rowsPerPageOptions={[5]}
-     
-            onRowClick={(e) => {
-                handleDetail(e.id);
-            }}
+        <>
+            {!articles ?
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid mb="2rem" item xs={12}>
+                        <Typography variant="h4" component="h3">
+                            Pas de données
+                        </Typography>
+                    </Grid>
+                </Grid> :
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid mb="2rem" item xs={12}>
+                        <DataGrid
+                            rows={!!articles ? articles : []}
+                            columns={columns}
+                            pageSize={20}
+                            autoHeight
+                            rowsPerPageOptions={[5]}
+                            localeText={localizedTextsMap}
+                            onRowClick={(e) => {
+                                handleDetail(e.id);
+                            }}
 
-      />
-        //<table className='table table-striped table-hover' aria-labelledby="tabelLabel">
-        //    <thead>
-        //        <tr>
-        //            <th>Code</th>
-        //            <th>Libellé</th>
-        //            <th>Catégorie</th>
-        //            <th>Actions</th>
-        //        </tr>
-        //    </thead>
-        //    <tbody>
-        //        {articles?.map(article =>
-        //            <tr key={article.id}
-        //                onClick={(e) => {
-        //                    console.log("lala" + article.id)
-        //                    e.stopPropagation();
-        //                    handleDetail(article.id);
-        //                }}>
-        //                <td>{article.code}</td>
-        //                <td>{article.libelle}</td>
-        //                <td>{article.id_categorie}</td>
-        //                <td>
-        //                    <button type="button" className="btn btn-primary"><i className="far fa-eye"></i></button>
-        //                    <button type="button" className="btn btn-success"><i className="fas fa-edit"></i></button>
-        //                    <button type="button" className="btn btn-danger"><i className="far fa-trash-alt"></i></button>
-        //                </td>
-        //            </tr>
-        //        )}
-        //    </tbody>
-        //</table>
+                        />
+                    </Grid>
+                </Grid> 
+               
+            }
+
+        </>
+
     )
-
-
 }
+
