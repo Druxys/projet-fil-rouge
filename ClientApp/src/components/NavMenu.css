@@ -1,9 +1,7 @@
-﻿a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿
+.color{
+    color: grey;
 }
-
 html {
   font-size: 14px;
 }
@@ -15,4 +13,14 @@ html {
 
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+.test {
+
+    height:100%;
+
+}
+
+#page-content-wrapper {
+    min-width: 0;
+    width: 100%;
 }

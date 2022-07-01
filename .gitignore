@@ -24,6 +24,10 @@ Bin/
 obj/
 Obj/
 
+# ClientApp
+ClientApp/node_modules
+node_modules
+
 # Visual Studio 2015 cache/options directory
 .vs/
 /wwwroot/dist/
